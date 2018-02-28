@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dashboard Orders</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'eCommerce/css/admin.css'%}">
+  </head>
+  <body>
+    <div class="header">
+      <h1>Dashboard</h1>
+      <h2>Orders</h2>
+      <h2>Products</h2>
+      <h2 class="logoff">Log off</h2>
+    </div>
+    <div class="search">
+      <h1> <input type="search" name="ordername" placeholder="search"> </h1>
+      <select name="status">
+        <option value="all">Show All</option>
+        <option value="process">Order in process</option>
+        <option value="shipped">Shipped</option>
+        <option value="canceled">Canceled</option>
+      </select>
+    </div>
+    <table class="maintable">
+      <tr>
+        <td>Order ID</td>
+        <td>Name</td>
+        <td>Date</td>
+        <td>Billing Address</td>
+        <td>Total</td>
+        <td>Order Status</td>
+      </tr>
+    </table>
+  </body>
+</html>
