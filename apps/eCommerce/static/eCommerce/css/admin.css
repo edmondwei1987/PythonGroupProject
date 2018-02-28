@@ -17,10 +17,10 @@
 }
 .search h1{
   display: inline-block;
-  margin-right:700px;
 }
-.search select{
+.search .rightbutton{
   display: inline-block;
+  margin-left: 700px;
 }
 .maintable{
   border:solid black 2px;
@@ -37,4 +37,9 @@
 }
 .login{
   margin-top:150px;
+}
+#uploadimage{
+  border:solid black 1px;
+  width:150px;
+  text-align: center;
 }
