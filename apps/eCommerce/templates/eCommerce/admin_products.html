@@ -9,22 +9,31 @@
   <body>
     <div class="header">
       <h1>Dashboard</h1>
-      <h2>Orders</h2>
+      <h2><a href='/admin/dashboard'>Orders</a></h2>
       <h2>Products</h2>
       <h2 class="logoff">Log off</h2>
     </div>
     <div class="search">
       <h1> <input type="search" name="search" placeholder="search"> </h1>
-      <h1 class="rightbutton"> <button type="button">Add New Product</button> </h1>
+      <a href='/admin/products/add'><button type="button">Add New Product</button></a>
     </div>
     <table class="maintable">
       <tr>
         <td>Picture</td>
         <td>ID</td>
         <td>Name</td>
-        <td>Inventory</td>
+        <td>price</td>
         <td>Action</td>
       </tr>
+      {% for each in product %}
+        <tr>
+          <td>picture</td>
+          <td>{{each.id}}</td>
+          <td>{{each.name}}</td>
+          <td>{{each.price}}</td>
+          <td><a href='/admin/products/view/{{each.id}}'>edit</a> <a href='/admin/products/delete/{{each.id}}'>delete</a></td>
+        </tr>
+      {% endfor %}
     </table>
   </body>
 </html>
