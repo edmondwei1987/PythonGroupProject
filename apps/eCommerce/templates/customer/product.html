@@ -6,37 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'ecommerce/css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'ecommerce/css/grid.css' %}">
     <title>{{categoties}}</title>
 </head>
 <body>
-    <h1>eCommerce</h1>
-    <p>Shopping Cart ({{count}})</p>
-    <div>
+    <header>
+        <h1 id="title">eCommerce</h1>
+        <p id="cart">Shopping Cart ({{count}})</p>
+    </header>
+
+    <div id="nav" >
         <form action="">
-                <input type="search" name="search">
-                <input type="submit" value="Search">
+            <input type="search" name="search">
+            <input type="submit" value="Search">
         </form>
-        <h3>Categoties</h3>
-        <p>T shirts</p>
-        <p>Shoes</p>
-        <p>Cups</p>
-        <p>Fruits</p>
-        <p>Show All</p>
+        <ul><h3>Categoties</h3>
+            <li><a>T shirts</a></li>
+            <li><a>Shoes</a></li>
+            <li><a>Cups</a></li>
+            <li><a>Fruits</a></li>
+            <li><a>Show All</a></li>
+        </ul>
     </div>
-    <div class="col span-1-of-5 box">
-        <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
+    <div id="list">
+
+        <div>
+           <a href="/products/show/{{product.id}}" target="_blank"><img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes"></a> 
+        </div>
+        <!-- {% for product in products %}
+        {# Each "contact" is a Contact model object. #}
+        {{ product.name }}<br />
+
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if products.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{contacts.previous_page_number}}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                </span>
+
+                {% if products.has_next %}
+                    <a href="?page={{products.next_page_number}}">next</a>
+                    <a href="?page={{products.paginator.num_pages}}">last &raquo;</a>
+                {% endif %}
+            </span> -->
     </div>
-    <div class="col span-1-of-5 box">
-        <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">       
+        <!-- <div class="col span-1-of-5 box">
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">       
+        </div>
+        <div class="col span-1-of-5 box">
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">        
+        </div>
+        <div class="col span-1-of-5 box">       
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
+        </div>   
+        <div class="col span-1-of-5 box">
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
+        </div> -->
+
     </div>
-    <div class="col span-1-of-5 box">
-        <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">        
-    </div>
-    <div class="col span-1-of-5 box">       
-        <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
-    </div>   
-    <div class="col span-1-of-5 box">
-        <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
-    </div>
+    
 </body>
 </html>
+
+

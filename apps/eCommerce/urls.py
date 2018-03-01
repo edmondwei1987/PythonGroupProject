@@ -3,7 +3,10 @@ from . import views
 
 
 urlpatterns=[
-        url(r'^$', views.product),
+    url(r'^products$', views.product),
+    url(r'^products/show/(?P<product_id>\d+)$', views.product_detail),
+    url(r'^buy/(?P<item>\w+)$', views.buy),
+    url(r'^carts$', views.shopping_cart),
     url(r'^admin/index$',views.admin_index),
     url(r'^admin_login$',views.admin_login),
     url(r'^admin/dashboard$',views.admin_dashboard),
