@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from models import *
 from django.contrib import messages
@@ -47,6 +47,8 @@ def admin_orderdetail(request, order_id):
 #show all the products
 def admin_products(request):
     products = Product.objects.all().order_by('id')
+    paginator = Paginator(products, 1)
+    page = request.GET.get('page')
     context = {
         'product' : products
     }
