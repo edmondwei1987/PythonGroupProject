@@ -1,0 +1,45 @@
+.header h1{
+  display: inline-block;
+  width:200px;
+  margin-right: 80px;
+}
+.header{
+  background-color: rgb(38, 127, 239);
+  padding-left: 30px;
+  font-family:sans-serif;
+}
+.header h2{
+  display: inline-block;
+  margin-right:20px;
+}
+.logoff{
+  margin-left: 500px;
+}
+.search h1{
+  display: inline-block;
+}
+.search .rightbutton{
+  display: inline-block;
+  margin-left: 700px;
+}
+.maintable{
+  border:solid black 2px;
+  border-radius: 4px;
+}
+.maintable td{
+  border:solid 1px black;
+  border-radius: 2px;
+  width:200px;
+}
+
+.login p{
+  text-align: center;
+}
+.login{
+  margin-top:150px;
+}
+#uploadimage{
+  border:solid black 1px;
+  width:150px;
+  text-align: center;
+}
