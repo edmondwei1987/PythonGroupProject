@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'ecommerce/css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'ecommerce/images/child.jpg' %}">
+    <title>{{categoties}}</title>
+</head>
+<body>
+    <h1>eCommerce</h1>
+    <p>Shopping Cart ({{count}})</p>
+    <div>
+        <form action="">
+                <input type="search" name="search">
+                <input type="submit" value="Search">
+        </form>
+        <h3>Categoties</h3>
+        <p>T shirts</p>
+        <p>Shoes</p>
+        <p>Cups</p>
+        <p>Fruits</p>
+        <p>Show All</p>
+    </div>
+    <div class="col span-1-of-5 box">
+        <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
+    </div>
+    <div class="col span-1-of-5 box">
+        <img src="ecommerce/images/child.jpg" alt="child_clothes">       
+    </div>
+    <div class="col span-1-of-5 box">
+        <img src="ecommerce/images/child.jpg" alt="child_clothes">        
+    </div>
+    <div class="col span-1-of-5 box">       
+        <img src="ecommerce/images/child.jpg" alt="child_clothes">
+    </div>   
+    <div class="col span-1-of-5 box">
+        <img src="ecommerce/images/child.jpg" alt="child_clothes">
+    </div>
+</body>
+</html>
