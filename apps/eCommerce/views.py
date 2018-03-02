@@ -23,7 +23,7 @@ def product(request, category_id):
     context = {
             "product_list": product,
             "category": Category.objects.all()
-    }    
+    }
     return render(request, 'customer/product.html', context) #not finish need to fingerout the logic
 
 
@@ -53,7 +53,7 @@ def shopping_cart(request):
     products = []
     for each in  request.session['cart']:
         print each
-        banana ={ 
+        banana ={
             'apple':Product.objects.get(id = each['product_id']),
             'quantity': each['quantity'],
         }
@@ -108,7 +108,7 @@ class ProductListView(ListView):
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
-        context = super(ProductListView, self).get_context_data(**kwargs) 
+        context = super(ProductListView, self).get_context_data(**kwargs)
         list_product = Product.objects.all()
         paginator = Paginator(list_product, self.paginate_by)
         page = self.request.GET.get('page')
@@ -127,7 +127,7 @@ def admin_products_create_page(request):
         'category' : Category.objects.all().order_by('name')
         }
     return render(request, 'eCommerce/admin_product_add.html', context)
-def admin_products_create(request): 
+def admin_products_create(request):
     if len(request.POST['new_category']) > 0:
         category = Category.objects.create(name = request.POST['new_category'])
     else:
@@ -155,39 +155,30 @@ def admin_products_edit(request, product_id):
 def admin_products_delete(request, product_id):
     Product.objects.get(id = product_id).delete()
     return redirect('/admin/products')
-    
+
 
 
 def paymenttest(request):
     stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
 
-    creditcard=Creditcard.objects.get(id=1)
-    cu = stripe.Customer.retrieve(creditcard.stripe_customer)
-    card = cu.sources.retrieve(creditcard.stripe_card)
+    customer=Customer.objects.get(id=1)
+    # for cus in Customer.objects.all():
+    #     print str(cus.id)+":"+cus.stripe_customer
+    stripe_cards= stripe.Customer.retrieve(customer.stripe_customer).sources.all(object="card")
 
-    return render(request,'eCommerce/payment_test.html',{'card':card})
+    return render(request,'eCommerce/payment_test.html',{'cards':stripe_cards})
 
 def charge(request):
     stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
     token=request.POST['stripeToken']
-    srtipe_customer = stripe.Customer.create(
-      # customer=request.session['id'],
-      customer=1,
-      source=token,
-    )
-    strip_card=srtipe_customer.sources.create(source=token)
-    # charge = stripe.Charge.create(
-    #   amount=999,
-    #   currency="usd",
-    #   description="Example charge",
-    #   customer=srtipe_customer.id,
-    #   source=token,
-    # )
+
+    # customer = Customer.objects.get(id=request.session['id'])
+    customer = Customer.objects.get(id=1)
+    stripe_customer = stripe.Customer.retrieve(customer.stripe_customer)
+    stripe_card=stripe_customer.sources.create(source=token)
+    stripe_card_id=stripe_card.id
 
 
-    # get customer from the session
-    # customer=Customer.objects.get(id=request.session['id'])
-    customer=Customer.objects.get(id=1)
     # create shipping address
     Address.objects.create(address=request.POST['address'],
     city=request.POST['city'],state=request.POST['state'],
@@ -197,12 +188,47 @@ def charge(request):
     city=request.POST['bcity'],state=request.POST['bstate'],
     zipcode=request.POST['bzipcode'],customer=customer)
     # create credit card
-    creditcard=Creditcard.objects.create(customer=customer,address=billing_address,stripe_card=srtipe_card.id,stripe_customer=stripe_customer.id,name_on_card=request.POST['bfullname'])
-
+    creditcard=Creditcard.objects.create(customer=customer,address=billing_address,stripe_card=stripe_card_id,name_on_card=request.POST['bfullname'])
+    # charge the card
+    charge = stripe.Charge.create(
+      amount=999,
+      currency="usd",
+      description="Example charge",
+      customer=stripe_customer.id,
+    )
 
     return redirect('/paymentresult/'+charge.status)
 
 
+def add_default_card(request):
+    # customer=Customer.objects.get(id=request.session['id'])
+    customer=Customer.objects.get(id=1)
+    stripe_customer = stripe.Customer.create(
+    # customer=request.session['id'],
+    customer=1,
+    source=token,
+    )
+    customer.stripe_customer=stripe_customer.id
+    customer.save()
+    stripe_card_id=''
+
+    # create shipping address
+    Address.objects.create(address=request.POST['address'],
+    city=request.POST['city'],state=request.POST['state'],
+    zipcode=request.POST['zipcode'],customer=customer)
+    # create billing address
+    billing_address=Address.objects.create(address=request.POST['baddress'],
+    city=request.POST['bcity'],state=request.POST['bstate'],
+    zipcode=request.POST['bzipcode'],customer=customer)
+    # create credit card
+    creditcard=Creditcard.objects.create(customer=customer,address=billing_address,stripe_card=stripe_card_id,name_on_card=request.POST['bfullname'])
+    # charge the card
+    charge = stripe.Charge.create(
+      amount=999,
+      currency="usd",
+      description="Example charge",
+      customer=stripe_customer.id,
+    )
+
 def paymentresult(request,status):
     return render(request,'eCommerce/payment_result.html',{'status':status})
-

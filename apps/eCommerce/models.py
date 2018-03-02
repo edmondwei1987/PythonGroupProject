@@ -13,13 +13,14 @@ class Customer(models.Model):
     last_name = models.CharField(max_length = 255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    stripe_customer = models.CharField(max_length=255,default='')
 
 class Address(models.Model):
     customer = models.ForeignKey(Customer, related_name='customer_address')
     address = models.CharField(max_length = 255)
     address2 = models.CharField(max_length = 255)
     city = models.CharField(max_length = 255)
-    state = models.CharField(max_length = 2) 
+    state = models.CharField(max_length = 2)
     zipcode = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -33,7 +34,6 @@ class Creditcard(models.Model):
     # exp = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    stripe_customer = models.CharField(max_length=255,default='')
     stripe_card = models.CharField(max_length=255,default='')
 
 class Category(models.Model):
