@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from models import *
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+from django.views.generic import ListView
+
 
 def product(request, category_id):
     if category_id  == '0':
         product = Product.objects.all(),
     else:
     # need function to go through page number
+
         category = Category.objects.get(id = category_id)
         product = Product.objects.filter(category = category)
     context = {
@@ -17,6 +23,8 @@ def product(request, category_id):
             "category": Category.objects.all()
     }    
     return render(request, 'customer/product.html', context) #not finish need to fingerout the logic
+
+
 def product_detail(request, product_id):
     context = {
         "product":Product.objects.get(id = product_id)
@@ -52,9 +60,6 @@ def shopping_cart(request):
         'products': products
     }
     return render(request, 'customer/carts.html', context)
-
-
-
 def admin_index(request):
     #login
     return render(request,'eCommerce/admin_index.html')
@@ -76,7 +81,7 @@ def admin_login(request):
         messages.error(request,'Email or Password incorrect.')
         return redirect('/admin/index')
 
-# ORDERS
+# ******************************ORDERS******************************
 def admin_dashboard(request):
     context = {
         'order' : Order.objects.all()
@@ -95,12 +100,25 @@ def admin_orderdetail(request, order_id):
 
 # ******************************PRODUCT***************************
 #show all the products
-def admin_products(request):
-    products = Product.objects.all().order_by('id')
-    context = {
-        'product' : products
-    }
-    return render(request,'eCommerce/admin_products.html', context)
+class ProductListView(ListView):
+    model = Product
+    template_name = "eCommerce/admin_products.html"
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs) 
+        list_product = Product.objects.all()
+        paginator = Paginator(list_product, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            product_list = paginator.page(page)
+        except PageNotAnInteger:
+            product_list = paginator.page(1)
+        except EmptyPage:
+            product_list = paginator.page(paginator.num_pages)
+        context['product'] = product_list
+        return context
+
 # Create new product
 def admin_products_create_page(request):
     context = {

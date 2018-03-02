@@ -13,7 +13,7 @@ urlpatterns=[
     url(r'^admin/dashboard$',views.admin_dashboard),
     url(r'^admin/orderdetail/(?P<order_id>\d+)$',views.admin_orderdetail),
     # dashboard / product-display all
-    url(r'^admin/products$',views.admin_products),
+    url(r'^admin/products$',views.ProductListView.as_view()),
 
     # create new
     url(r'^admin/products/add$',views.admin_products_create_page),
