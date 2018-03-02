@@ -4,7 +4,41 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from models import *
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+from django.views.generic import ListView
 
+def product(request):
+    # need function to go through page number
+    # product_list = Product.objects.all()
+    # paginator = Paginator(product_list, 15) # Show 15 contacts per page
+    # page = request.GET.get('page')
+    # products = Product.get_page(page)
+    # if not 'price' in request.session:
+    #     request.session['price'] = 0
+    return render(request, 'customer/product.html') #not finish need to fingerout the logic
+
+def product_detail(request, product_id):
+
+    return render(request, 'customer/product_detail.html')
+def buy(request, item):
+    request.session['count'] = request.POST['quantity']
+    product = Product.get(id = product_id)
+    if item == product.name:
+        price = product.price
+        request.session['price'] = price
+    return redirect('/carts')
+
+def shopping_cart(request):
+    product = Product.get(id = product_id)
+    context = {
+        'item': product.name,
+        'price': product.price,
+        'count': request.session['count'],
+        'total': product.price *float(request.session['count'])
+    }
+    return render(request, 'customer/carts.html', context)
 def admin_index(request):
     #login
     return render(request,'eCommerce/admin_index.html')
@@ -26,7 +60,7 @@ def admin_login(request):
         messages.error(request,'Email or Password incorrect.')
         return redirect('/admin/index')
 
-# ORDERS
+# ******************************ORDERS******************************
 def admin_dashboard(request):
     context = {
         'order' : Order.objects.all()
@@ -45,14 +79,25 @@ def admin_orderdetail(request, order_id):
 
 # ******************************PRODUCT***************************
 #show all the products
-def admin_products(request):
-    products = Product.objects.all().order_by('id')
-    paginator = Paginator(products, 1)
-    page = request.GET.get('page')
-    context = {
-        'product' : products
-    }
-    return render(request,'eCommerce/admin_products.html', context)
+class ProductListView(ListView):
+    model = Product
+    template_name = "eCommerce/admin_products.html"
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs) 
+        list_product = Product.objects.all()
+        paginator = Paginator(list_product, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            product_list = paginator.page(page)
+        except PageNotAnInteger:
+            product_list = paginator.page(1)
+        except EmptyPage:
+            product_list = paginator.page(paginator.num_pages)
+        context['product'] = product_list
+        return context
+
 # Create new product
 def admin_products_create_page(request):
     context = {
