@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'ecommerce/css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'ecommerce/css/grid.css' %}">
+    <title>{{categoties}}</title>
+</head>
+<body>
+    <header>
+        <h1 id="title">eCommerce</h1>
+        <p id="cart">Shopping Cart ({{count}})</p>
+    </header>
+
+    <div id="nav" >
+        <form action="">
+            <input type="search" name="search">
+            <input type="submit" value="Search">
+        </form>
+        <ul><h3>Categoties</h3>
+            {% for each in category %}
+            <li><a href="/products/{{each.id}}">{{each.name}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="list">
+        <p>{{category.name}}</p>
+        <div>
+            {% for each in product_list %}
+            <a href="/products/show/{{each.id}}" target="_blank">{{each.name}}</a>
+           <!-- <a href="/products/show/{{product.id}}" target="_blank"><img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes"></a>  -->
+            {% endfor %}
+        </div>
+        <!-- {% for product in products %}
+        {# Each "contact" is a Contact model object. #}
+        {{ product.name }}<br />
+
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if products.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{contacts.previous_page_number}}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                </span>
+
+                {% if products.has_next %}
+                    <a href="?page={{products.next_page_number}}">next</a>
+                    <a href="?page={{products.paginator.num_pages}}">last &raquo;</a>
+                {% endif %}
+            </span> -->
+    </div>
+        <!-- <div class="col span-1-of-5 box">
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">       
+        </div>
+        <div class="col span-1-of-5 box">
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">        
+        </div>
+        <div class="col span-1-of-5 box">       
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
+        </div>   
+        <div class="col span-1-of-5 box">
+            <img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes">
+        </div> -->
+
+    </div>
+    
+</body>
+</html>
+
+

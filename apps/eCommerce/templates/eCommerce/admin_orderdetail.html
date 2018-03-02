@@ -9,28 +9,56 @@
   <body>
     <div class="header">
       <h1>Dashboard</h1>
-      <h2>Orders</h2>
-      <h2>Products</h2>
+      <h2><a href='/admin/dashboard'>Orders</a></h2>
+      <h2><a href='/admin/products'>Products</a></h2>
       <h2 class="logoff">Log off</h2>
     </div>
     <div class="address">
-
+      <p>Order ID: {{order.id}}</p>
+      <div class="address">
+          <p>Customer shipping info:</p>
+          <p>name: {{order.customer.first_name}} {{order.customer.last_name}}</p>
+          <p>address: {{}}</p>
+          <p>city: {{}}</p>
+          <p>state: {{}}</p>
+          <p>zip: {{}}</p>
+      </div>
+      <div class="address">
+          <p>Customer billing info:</p>
+          <p>name: {{order.customer.first_name}} {{order.customer.last_name}}</p>
+          <p>address: {{}}</p>
+          <p>city: {{}}</p>
+          <p>state: {{}}</p>
+          <p>zip: {{}}</p>
+      </div>
     </div>
     <div class="main">
       <table>
-        <td>ID</td>
-        <td>Item</td>
-        <td>Price</td>
-        <td>Quantity</td>
-        <td>Total</td>
+        <tr>
+          <td>ID</td>
+          <td>Item</td>
+          <td>Price</td>
+          <td>Quantity</td>
+          <td>Total</td>
+        </tr>
+        {% for each in order_detail %}
+        <tr>
+          <td>{{each.product.id}}</td>
+          <td>{{each.product.name}}</td>
+          <td>{{each.product.price}}</td>
+          <td>{{each.amount}}</td>
+          <td>{{each.product.price}}</td>
+        </tr>
+      {% endfor %}
+
       </table>
       <div class="status">
-        Status: shipped
+        Status: {{order.status}}
       </div>
       <div class="total">
-        <p>Sub total:</p>
-        <p>Shipping:</p>
-        <p>Total Price:</p>
+        <p>Sub total: {{order.subtotal}}</p>
+        <p>Shipping: {{order.shipping}}</p>
+        <p>Total Price: {{order.subtotal + order.shipping}}</p>
       </div>
     </div>
   </body>

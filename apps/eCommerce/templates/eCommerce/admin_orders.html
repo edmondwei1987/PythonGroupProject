@@ -10,7 +10,7 @@
     <div class="header">
       <h1>Dashboard</h1>
       <h2>Orders</h2>
-      <h2>Products</h2>
+      <h2><a href='/admin/products'>Products</a></h2>
       <h2 class="logoff">Log off</h2>
     </div>
     <div class="search">
@@ -31,6 +31,16 @@
         <td>Total</td>
         <td>Order Status</td>
       </tr>
+      {% for each in order %}
+        <tr>
+          <td><a href='/admin/orderdetail/{{each.id}}'>{{each.id}}</a></td>
+          <td>{{each.customer.first_name}} {{each.customer.last_name}}</td>
+          <td>{{each.date}}</td>
+          <td>{{each.customer.address}}</td>
+          <td>{{each.subtotal}}</td>
+          <td>{{each.status}}</td>
+        </tr>
+      {% endfor %}
     </table>
   </body>
 </html>

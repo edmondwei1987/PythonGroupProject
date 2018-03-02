@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <header>
+        <h1 id="title">eCommerce</h1>
+        <p id="cart">Shopping Cart ({{count}})</p>
+    </header>
+    <table>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <tr>
+            {% for banana in products %}
+            <td>{{banana.apple.name}}</td>
+            <td>{{banana.apple.price}}</td>
+            <td>{{banana.quantity}}</td>
+
+            {% endfor %}
+        <P>Total: </P>
+    </table>
+    <button type="submit" value="Countinue Shopping">Countinue Shopping</button>
+    <h2>Shipping Information</h2>
+    <form action="/process" method="POST">
+
+
+    </form>
+    
+</body>
+</html>

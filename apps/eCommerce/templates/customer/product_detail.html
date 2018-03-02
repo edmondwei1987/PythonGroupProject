@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product Detail</title>
+</head>
+<body>
+    <header>
+        <h1 id="title">eCommerce</h1>
+        <p id="cart">Shopping Cart ({{count}})</p>
+    </header>
+    <a href="/products">Go Back</a>
+    <h3>{{product.name}}</h3>
+    <img alt="child_clothes"> 
+    <p>Product detail information:<br>{{product.description}}</p>
+    <form action="/buy/{{product.id}}" method="post">
+        {% csrf_token %}
+        <p>Price: {{product.price}} <select name="quantity">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select> <input type="submit" value="Buy"></p>
+       
+    </form>
+    
+</body>
+</html>
