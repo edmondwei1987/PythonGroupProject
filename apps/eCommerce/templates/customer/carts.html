@@ -17,13 +17,20 @@
         <th>Quantity</th>
         <th>Total</th>
         <tr>
-            <td>{{item}}</td>
-            <td>{{price}}</td>
-            <td>{{count}}</td>
-            <td>{{total}}</td>
-        </tr>
+            {% for banana in products %}
+            <td>{{banana.apple.name}}</td>
+            <td>{{banana.apple.price}}</td>
+            <td>{{banana.quantity}}</td>
+
+            {% endfor %}
+        <P>Total: </P>
     </table>
     <button type="submit" value="Countinue Shopping">Countinue Shopping</button>
+    <h2>Shipping Information</h2>
+    <form action="/process" method="POST">
+
+
+    </form>
     
 </body>
 </html>

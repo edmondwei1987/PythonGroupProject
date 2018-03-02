@@ -21,17 +21,18 @@
             <input type="submit" value="Search">
         </form>
         <ul><h3>Categoties</h3>
-            <li><a>{{category.name}}T shirts</a></li>
-            <li><a>Shoes</a></li>
-            <li><a>Cups</a></li>
-            <li><a>Fruits</a></li>
-            <li><a>Show All</a></li>
+            {% for each in category %}
+            <li><a href="/products/{{each.id}}">{{each.name}}</a></li>
+            {% endfor %}
         </ul>
     </div>
     <div id="list">
-
+        <p>{{category.name}}</p>
         <div>
-           <a href="/products/show/{{product.id}}" target="_blank"><img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes"></a> 
+            {% for each in product_list %}
+            <a href="/products/show/{{each.id}}" target="_blank">{{each.name}}</a>
+           <!-- <a href="/products/show/{{product.id}}" target="_blank"><img src="{% static 'ecommerce/images/child.jpg' %}" alt="child_clothes"></a>  -->
+            {% endfor %}
         </div>
         <!-- {% for product in products %}
         {# Each "contact" is a Contact model object. #}
