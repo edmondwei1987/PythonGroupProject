@@ -4,6 +4,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from models import *
 from django.contrib import messages
+#at terminal enter 'pip install --upgrade stripe' to install stripe
+import stripe
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
@@ -68,7 +70,7 @@ def admin_index(request):
 # password: python
 def admin_login(request):
     # check if username in db
-    try: 
+    try:
         admin = Admin.objects.get(username = request.POST['username'])
     except:
         messages.error(request,'username or Password incorrect.')
@@ -154,4 +156,53 @@ def admin_products_delete(request, product_id):
     Product.objects.get(id = product_id).delete()
     return redirect('/admin/products')
     
+
+
+def paymenttest(request):
+    stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+    creditcard=Creditcard.objects.get(id=1)
+    cu = stripe.Customer.retrieve(creditcard.stripe_customer)
+    card = cu.sources.retrieve(creditcard.stripe_card)
+
+    return render(request,'eCommerce/payment_test.html',{'card':card})
+
+def charge(request):
+    stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+    token=request.POST['stripeToken']
+    srtipe_customer = stripe.Customer.create(
+      # customer=request.session['id'],
+      customer=1,
+      source=token,
+    )
+    strip_card=srtipe_customer.sources.create(source=token)
+    # charge = stripe.Charge.create(
+    #   amount=999,
+    #   currency="usd",
+    #   description="Example charge",
+    #   customer=srtipe_customer.id,
+    #   source=token,
+    # )
+
+
+    # get customer from the session
+    # customer=Customer.objects.get(id=request.session['id'])
+    customer=Customer.objects.get(id=1)
+    # create shipping address
+    Address.objects.create(address=request.POST['address'],
+    city=request.POST['city'],state=request.POST['state'],
+    zipcode=request.POST['zipcode'],customer=customer)
+    # create billing address
+    billing_address=Address.objects.create(address=request.POST['baddress'],
+    city=request.POST['bcity'],state=request.POST['bstate'],
+    zipcode=request.POST['bzipcode'],customer=customer)
+    # create credit card
+    creditcard=Creditcard.objects.create(customer=customer,address=billing_address,stripe_card=srtipe_card.id,stripe_customer=stripe_customer.id,name_on_card=request.POST['bfullname'])
+
+
+    return redirect('/paymentresult/'+charge.status)
+
+
+def paymentresult(request,status):
+    return render(request,'eCommerce/payment_result.html',{'status':status})
 
