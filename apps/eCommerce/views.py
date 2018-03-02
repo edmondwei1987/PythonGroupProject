@@ -16,7 +16,7 @@ def product(request):
     # page = request.GET.get('page')
     # products = Product.get_page(page)
     # if not 'price' in request.session:
-    #     request.session['price'] = 0
+    # request.session['price'] = 0
     return render(request, 'customer/product.html') #not finish need to fingerout the logic
 
 def product_detail(request, product_id):
