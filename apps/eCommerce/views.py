@@ -9,34 +9,55 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from django.views.generic import ListView
 
-def product(request):
+
+def product(request, category_id):
+    if category_id  == '0':
+        product = Product.objects.all(),
+    else:
     # need function to go through page number
-    # product_list = Product.objects.all()
-    # paginator = Paginator(product_list, 15) # Show 15 contacts per page
-    # page = request.GET.get('page')
-    # products = Product.get_page(page)
-    # if not 'price' in request.session:
-    # request.session['price'] = 0
-    return render(request, 'customer/product.html') #not finish need to fingerout the logic
+
+        category = Category.objects.get(id = category_id)
+        product = Product.objects.filter(category = category)
+    context = {
+            "product_list": product,
+            "category": Category.objects.all()
+    }    
+    return render(request, 'customer/product.html', context) #not finish need to fingerout the logic
+
 
 def product_detail(request, product_id):
+    context = {
+        "product":Product.objects.get(id = product_id)
+    }
+    return render(request, 'customer/product_detail.html', context)
 
-    return render(request, 'customer/product_detail.html')
-def buy(request, item):
-    request.session['count'] = request.POST['quantity']
-    product = Product.get(id = product_id)
-    if item == product.name:
-        price = product.price
-        request.session['price'] = price
+
+
+
+def buy(request, product_id):
+    if not 'cart' in request.session:
+        request.session['cart'] = []
+
+    products_buy = {
+        'product_id': product_id,
+        'quantity': request.POST['quantity']
+    }
+    request.session['cart'].append(products_buy)
+    print request.session['cart']
+    request.session.modified = True
     return redirect('/carts')
 
 def shopping_cart(request):
-    product = Product.get(id = product_id)
+    products = []
+    for each in  request.session['cart']:
+        print each
+        banana ={ 
+            'apple':Product.objects.get(id = each['product_id']),
+            'quantity': each['quantity'],
+        }
+        products.append(banana)
     context = {
-        'item': product.name,
-        'price': product.price,
-        'count': request.session['count'],
-        'total': product.price *float(request.session['count'])
+        'products': products
     }
     return render(request, 'customer/carts.html', context)
 def admin_index(request):
@@ -133,3 +154,4 @@ def admin_products_delete(request, product_id):
     Product.objects.get(id = product_id).delete()
     return redirect('/admin/products')
     
+
