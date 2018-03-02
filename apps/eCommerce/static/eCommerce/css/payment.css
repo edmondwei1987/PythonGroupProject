@@ -1,0 +1,142 @@
+.StripeElement {
+  background-color: white;
+  height: 20px;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+  width:420px;
+  margin-top:10px;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+
+* {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+fieldset {
+  border: 1px solid #a600ec;
+  padding: 0px 20px 20px 20px;
+  border-radius: 8px;
+  width:450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+fieldset legend {
+  margin: 0 auto;
+  padding: 0 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  color: #a600ec;
+  /* background-color: #9169d8; */
+}
+
+fieldset legend + * {
+  clear: both;
+}
+
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 0 10px;
+}
+.field {
+  position: relative;
+  width: 100%;
+}
+
+label {
+  width: 100%;
+  color: #a900ec;
+  font-size: 14px;
+  font-weight: 350;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.input {
+  width: 100%;
+  background: transparent;
+  color:#578da7;
+  padding: 5px 0 6px 0;
+  border-bottom: 1px solid #a988ec;
+  transition: border-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+input,button,select {
+  -webkit-animation: 1ms void-animation-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-style: none;
+  border-radius: 0;
+}
+
+button {
+  display: block;
+  height: 40px;
+  margin: 20px 0 0;
+  background-color: #a900ec;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button:active {
+  background-color: #cdd0f8;
+}
+
+.input:focus {
+  border-bottom: 1px solid #a600ec;
+
+}
+
+.field + .field {
+  margin-left: 10px;
+}
+
+#subtitle{
+  text-align: center;
+  margin: 0px;
+  color: #a900ec;
+  font-size: 12px;
+  font-weight: 350;
+}
+.first.row{
+  margin-top:20px;
+}
+
+.input::-webkit-input-placeholder {
+  color: #e8e1fb;
+}
+
+.input::-moz-placeholder {
+  color: #e8e1fb;
+}
+
+.input:-ms-input-placeholder {
+  color: #e8e1fb;
+}

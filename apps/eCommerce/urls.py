@@ -9,4 +9,8 @@ urlpatterns=[
     url(r'^admin/products$',views.admin_products),
     url(r'^admin/orderdetail$',views.admin_orderdetail),
     url(r'^admin/productdetail$',views.admin_productdetail),
+    url(r'^paymenttest$',views.paymenttest),
+    url(r'^charge$',views.charge),
+    url(r'^paymentresult/(?P<status>\w+)$',views.paymentresult),
+
 ]

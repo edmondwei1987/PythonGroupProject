@@ -28,11 +28,13 @@ class Creditcard(models.Model):
     customer = models.ForeignKey(Customer, related_name='customer_cc')
     address = models.ForeignKey(Address, related_name='address_cc')
     name_on_card = models.CharField(max_length = 255)
-    card_number = models.IntegerField()
-    sucurity_code = models.IntegerField()
-    exp = models.IntegerField()
+    # card_number = models.IntegerField()
+    # sucurity_code = models.IntegerField()
+    # exp = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    stripe_customer = models.CharField(max_length=255,default='')
+    stripe_card = models.CharField(max_length=255,default='')
 
 class Category(models.Model):
     name = models.CharField(max_length = 255)
